@@ -13,8 +13,8 @@ dirname = tempfile.mkdtemp()
 filename = os.path.join(dirname, "hello.txt")
 string = "Hello world!"
 
-pid = run("gedit")
-focus.application("gedit")
+pid = run("mousepad")
+focus.application("mousepad")
 type(string)
 
 keyCombo("<ctrl>s")
@@ -30,7 +30,7 @@ os.kill(pid,signal.SIGSTOP) ##dogtail isn't detecting the close button...
 
 f = open(filename,"r")
 saved_string = f.read()
-if saved_string != string + "\n": 
+if saved_string != string : 
     print ("error: bad content saved")
     print (repr(saved_string))
 else:
