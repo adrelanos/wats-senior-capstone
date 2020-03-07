@@ -7,8 +7,8 @@ Installs
 
 For Whonix
 
-sudo apt-get install python3-pip
-sudo apt-get install python3-pyatspi
-pip3 install dogtail
+	sudo apt-get install python3-pip
+	sudo apt-get install python3-pyatspi
+	pip3 install dogtail
 
 (Haven't tried to GUI inspector in Whonix)
