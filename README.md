@@ -44,7 +44,7 @@ from stock Whonix, first make sure you're up-to-date, then,
 
 set up your git repository, current functionality works with merely setting it up in the home directory (does this matter?)
 
-`git clone https://github.com/johncameronquinn/wats-senior-capstone.git'
+`git clone https://github.com/johncameronquinn/wats-senior-capstone.git`
 
-'git checkout <branch'
+`git checkout <branch`
 
