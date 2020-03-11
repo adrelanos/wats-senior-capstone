@@ -46,5 +46,5 @@ set up your git repository, current functionality works with merely setting it u
 
 `git clone https://github.com/johncameronquinn/wats-senior-capstone.git`
 
-`git checkout <branch`
+`git checkout <branch>`
 
