@@ -3,6 +3,7 @@ from dogtail.procedural import *
 import re
 import subprocess
 import tempfile
+import time
 
 ##
 # file name: terminalapplications.py
@@ -63,7 +64,9 @@ def step_impl(context):
     
     #note since it should be the most recent open process, it should be already focused
     #but we try to refocus anyhow
-    focus.application("xterm")
+    
+    #focus.application("xterm")  #xterm cannot be identified by dogtail / accersier so I'm not sure how to focus it
+    time.sleep(.3) #attempt at killing the race condidtion
     type("nano")
     keyCombo("<enter>")
     pass
@@ -87,7 +90,8 @@ def step_impl(context):
     context.filename = dirname + "/hello.txt"
     
     
-    focus.application("xterm")
+    #focus.application("xterm") see other call of this for more info
+    time.sleep(.1)
     type(TEST_TEXT)
     keyCombo("<ctrl>x")
     keyCombo("y")
@@ -95,7 +99,9 @@ def step_impl(context):
     keyCombo("<enter>")
 
     context.oracleText = TEST_TEXT
-    context.completedProcess.kill()
+    #context.completedProcess.kill() doesn't work so use this method
+    type("exit")
+    keyCombo("<enter>")
     pass
 
 @then('that file will have the text we wrote')
