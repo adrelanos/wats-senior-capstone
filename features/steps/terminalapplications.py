@@ -2,6 +2,7 @@ from behave import *
 from dogtail.procedural import *
 import re
 import subprocess
+import tempfile
 
 ##
 # file name: terminalapplications.py
@@ -13,6 +14,7 @@ import subprocess
 DEBUG_MODE = True
 
 TEST_TEXT = "Hello world!"
+
     
 @given('we are testing nano and xterm')
 def step_impl(context):
@@ -23,9 +25,9 @@ def step_impl(context):
 def step_impl(context):
     # execute dpkg on each application to check if it's installed
     
-    for application in context.testApplications :
+    for app0 in context.testApplications :
         # execute, capture output and error
-        output = subprocess.check_output(["dpkg", "--status", application], encoding='ascii')
+        output = subprocess.check_output(["dpkg", "--status", app0], encoding='ascii')
         match=re.search(r'Status: install ok installed', output)
 
         #no output found, throw an error
@@ -33,7 +35,7 @@ def step_impl(context):
             print(output)
             raise RuntimeError('Success message not found in dpkg status output!')
         else:
-            print("for program: %s dpkg found status %s" % (application, match.string)) if (DEBUG_MODE) else print("")            
+            print("for program: %s dpkg found status %s" % (app0, match.string)) if (DEBUG_MODE) else print("")            
     pass
 
 @when('we open a new xterm terminal')
@@ -45,8 +47,9 @@ def step_impl(context):
     #
     # open in a separate terminal window
     #
-    context.completedProcess=subprocess.call(["xterm", "&"], shell=True) # behave hangs here until this process returns
+    context.completedProcess = subprocess.Popen(["xterm"], shell=True) # behave hangs here until this process returns
     pass
+
     
 @when('we open nano')
 def step_impl(context):
@@ -58,6 +61,11 @@ def step_impl(context):
     # HOWEVER we will need to test the xfce terminal too, which presents problems
     #
     
+    #note since it should be the most recent open process, it should be already focused
+    #but we try to refocus anyhow
+    focus.application("xterm")
+    type("nano")
+    keyCombo("<enter>")
     pass
 
 
@@ -75,9 +83,19 @@ def step_impl(context):
     #
     # when should be test actions, then should be the oracle section
     #
+    dirname = tempfile.mkdtemp()
+    context.filename = dirname + "/hello.txt"
     
+    
+    focus.application("xterm")
     type(TEST_TEXT)
+    keyCombo("<ctrl>x")
+    keyCombo("y")
+    type(context.filename)
+    keyCombo("<enter>")
+
     context.oracleText = TEST_TEXT
+    context.completedProcess.kill()
     pass
 
 @then('that file will have the text we wrote')
@@ -87,5 +105,9 @@ def step_impl(context):
     # read the file from python, and check against - context.test_text, or whatever you use
     # the context object is passed from step to step, so use it to hold variables, objects, etc
     #
-    
-    assert context.failed is False
+    f = open(context.filename,"r")
+    saved_string = f.read()
+    if saved_string == TEST_TEXT:
+        assert context.failed is False
+    else:
+    	assert context.failed is True
