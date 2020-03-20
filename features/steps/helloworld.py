@@ -4,6 +4,7 @@ import subprocess
 from subprocess import Popen, PIPE, STDOUT
 import os
 import tempfile
+import time
 
 TEST_TEXT = "Hello world!"
 
@@ -26,13 +27,14 @@ def step_impl(context):
     # the created process actually exits.
     #
     
-    mousepadproc = subprocess.Popen(["mousepad", "&"])
+    mousepadproc = subprocess.Popen(["mousepad"])
     context.testProcess=mousepadproc
     pass
 
 @when('we write hello world')
 def step_impl(context):
     focus.application("mousepad")
+    time.sleep(.5)
     type(TEST_TEXT)
     pass
 
@@ -41,17 +43,20 @@ def step_impl(context):
     context.dirname=tempfile.mkdtemp()
     context.filename = os.path.join(context.dirname, "hello.txt")
     keyCombo("<ctrl>s")
+    time.sleep(.1)
     type(context.filename)
-    focus.widget("Save As")
-    click.button("Save")
+    time.sleep(.1)
+    keyCombo("<enter>")
+    time.sleep(.1)
+    keyCombo("<ctrl>q")
 
     # wait a little for it to finish
-    try:
-        context.wait(5)
+    #try:
+    #   context.wait(5)
 
-    except subprocess.TimeoutExpired:
-     # kills it, -9 style if it takes too long
-        context.testProcess.kill()
+    #except subprocess.TimeoutExpired:
+    #  kills it, -9 style if it takes too long
+    #    context.testProcess.kill()
     pass
 
 @then('the file will exist')
