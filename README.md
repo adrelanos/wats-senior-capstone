@@ -1,6 +1,11 @@
 # wats-senior-capstone
 Whonix Automated Testing Suite for Team 4.1 at CofC
 
+### Directory Structure :
+
+features - completed feature files which contain (possibly incomplete) step definitions
+stagedfeatures - completed feature files which lack completed step definitions
+plannedfeatures - incomplete feature files
 
 ### Welcome to the Whonix Automated-Testing-Suite Development Repository
 
