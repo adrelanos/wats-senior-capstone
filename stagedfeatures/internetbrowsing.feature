@@ -16,4 +16,4 @@ Feature: internet browsing using the tor browser
   And I go to the webpage {http://dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion}
   And I download the file at {https://download.whonix.org/libvirt/15.0.0.8.7/Whonix-XFCE-15.0.0.8.7.libvirt.xz.asc}
   Then the file finishes downloading successfully
-  and the file exists
+  And the file exists
