@@ -15,3 +15,11 @@ Scenario: close an open applcation with the mouse
  And clicks the close button
  And clicks confirm
  Then "mousepad" is closed"
+
+Scenario: search for an application and open it
+ Given the user is logged in and the GUI is active
+ When a user clicks on the "application launcher"
+ And clicks on the "search field"
+ And types in "mousepad"
+ And presses "enter"
+ Then mousepad opens successfully
