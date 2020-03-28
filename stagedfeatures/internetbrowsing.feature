@@ -3,17 +3,25 @@ Feature: internet browsing using the tor browser
  As a whonix user
  I need to be able to browse the internet
 
- Scenario: open the tor browser, successfully connect to duckduckgo
-  Given {whonixcheck} reports OK
-  When I open the tor browser
-  And I go to the webpage {https://duckduckgo.com}
-  Then the page returns the code {200}
+ Background:
+  Given the terminal command torbrowser returns 0
 
- Scenario: navigate to a whonix over clearnet and tor, download a file over tor
-  Given {whonixcheck} reports OK
-  When I open the tor browser
-  And I go to the webpage {https://whonix.org}
-  And I go to the webpage {http://dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion}
-  And I download the file at {https://download.whonix.org/libvirt/15.0.0.8.7/Whonix-XFCE-15.0.0.8.7.libvirt.xz.asc}
-  Then the file finishes downloading successfully
-  And the file exists
+ Scenario Outline: Navigating to various websites
+  Given the file ~/.tb/tor-browser/Browser/Downloads/websitetest does not exist
+  And the application torbrowser is focused
+  When I press the key combination <ctrl><t>
+  And I type <webaddress>
+  And I press <enter>
+  And I press the key combination <ctrl><u>
+  And I press the key combination <ctrl><s>
+  And I type websitetest
+  And I press <enter>
+  And I press the key combination <ctrl><s>
+  Then the file ~/.tb/tor-browser/Browser/Downloads/websitetest exists
+  And that file contains the text <oracletext>
+
+  Examples:
+   | webaddress | oracletext |
+   | https://check.torproject.org | Congratulations. This browser is configured to use Tor. |
+   | http://dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion | wiki/Why_Whonix_is_Freedom_Software |
+   | https://check.torproject.org | wiki/Why_Whonix_is_Freedom_Software |
