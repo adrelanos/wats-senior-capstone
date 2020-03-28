@@ -6,39 +6,27 @@ import os
 import tempfile
 import time
 
-TEST_TEXT = "Hello world!"
-
-@given('we have nano installed')
-def step_impl(context):
+@given('I have {application} installed')
+def step_impl(context, application):
+    # TODO, remove
     pass
 
-@when('we open mousepad')
-def step_impl(context):
-    #
-    # Two major options recognized for user input into a subprocess are recognized:
-    # First, there is the option of capturing stdin from the parent process,
-    # and redirecting it to the stdin of the child process.
-    #
-    # Secondly, there is the option of forking a new process completely, focusing
-    # that process, and inputing stdin directly into that.
-    #
-    # this implementation uses the second option with Popen being a lowlevel
-    # interface, accessed by the subprocess.run. Care must be taken to ensure
-    # the created process actually exits.
-    #
-    
-    mousepadproc = subprocess.Popen(["mousepad"])
+@when('I open the application {application} programmatically')
+def step_impl(context, application):
+
+    # open application as a separately managed process
+    mousepadproc = subprocess.Popen([application])
     context.testProcess=mousepadproc
-    pass
-
-@when('we write hello world')
-def step_impl(context):
     focus.application("mousepad")
-    time.sleep(.5)
-    type(TEST_TEXT)
     pass
 
-@when('we quit and save the file')
+@when('I type {text}')
+def step_impl(context, text):
+    time.sleep(.5)
+    type(text)
+    pass
+
+@when('I quit and save the file')
 def step_impl(context):
     context.dirname=tempfile.mkdtemp()
     context.filename = os.path.join(context.dirname, "hello.txt")
@@ -62,11 +50,8 @@ def step_impl(context):
 @then('the file will exist')
 def step_impl(context):
     # checks for the file
-    if os.path.isfile(context.filename):
-        pass
-    else:
-        # TODO (for John) throw an error
-        pass
+    assert os.path.isfile(context.filename)
+    pass
 
 @then('the returncode was zero')
 def step_impl(context):
