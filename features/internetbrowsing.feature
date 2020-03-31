@@ -10,7 +10,7 @@ Feature: internet browsing using the tor browser
 
  Scenario Outline: Navigating to various websites
   When I press the key combination "ctrl t"
-  And I type "webaddress"
+  And I type "<webaddress>"
   And I press the key combination "Enter"
   And I press the key combination "ctrl u"
   And I press the key combination "ctrl s"
@@ -18,7 +18,7 @@ Feature: internet browsing using the tor browser
   And I press the key combination "Enter"
   And I press the key combination "ctrl s"
   Then the file "~/.tb/tor-browser/Browser/Downloads/websitetest" exists
-  And that file contains the "oracletext"
+  And that file contains the "<oracletext>"
 
   Examples:
    | webaddress | oracletext |
