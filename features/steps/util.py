@@ -8,6 +8,8 @@ import os.path
 ### BASIC ###
 # this section contains basic checks, such as file io, install status, etc.
 
+TIME_CONSTANT = 3
+
 @given('the application "{application}" is installed')
 def step_impl(context, application):
     # checks with DPKG that 'application' is installed
@@ -55,8 +57,11 @@ def step_impl(context, filepath):
 
 @given('the test file does not exist')
 def step_impl(context):
-    os.remove(context.testfilepath)
-    pass
+    try:
+	os.remove(context.testfilepath)
+	pass
+    except:
+	pass
 
 @then('the file "{filepath}" exists')
 def step_impl(context, filepath):
@@ -145,7 +150,7 @@ def step_impl(context, key):
     # TODO emulate the user pressing the key 'key'
     # Assumes this a functional key rather than a letter
     # such as enter or alt
-    time.sleep(.1)
+    time.sleep(TIME_CONSTANT)
     type("<" + key + ">")
     pass
 
@@ -163,7 +168,7 @@ def step_impl(context, keycombo):
         else:
             combo += tok
 
-    time.sleep(.1)
+    time.sleep(TIME_CONSTANT)
     keyCombo(combo)
     
     pass
@@ -172,7 +177,7 @@ def step_impl(context, keycombo):
 def step_impl(context, text):
     # TODO emulate the user typing the text 'text'
 
-    time.sleep(.1)
+    time.sleep(TIME_CONSTANT)
     type(text)
 
     pass
