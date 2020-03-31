@@ -58,10 +58,11 @@ def step_impl(context, filepath):
 @given('the test file does not exist')
 def step_impl(context):
     try:
-	os.remove(context.testfilepath)
-	pass
+	    os.remove(context.testfilepath)
+	    pass
     except:
-	pass
+	    pass
+    pass
 
 @then('the file "{filepath}" exists')
 def step_impl(context, filepath):
