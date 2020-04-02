@@ -16,7 +16,6 @@ Feature: internet browsing using the tor browser
   And I press the key combination "ctrl s"
   And I type "websitetest"
   And I press the key combination "Enter"
-  And I press the key combination "ctrl s"
   Then the file "~/.tb/tor-browser/Browser/Downloads/websitetest" exists
   And that file contains the "<oracletext>"
 
