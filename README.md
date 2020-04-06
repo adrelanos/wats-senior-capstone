@@ -39,7 +39,7 @@ Make sure python 3 is installed
 
 from stock Whonix, first make sure you're up-to-date, then,
 
-`sudo apt-get install behave`
+`sudo apt-get install python3-behave`
 
 `sudo apt-get install python3-pip`
 
@@ -53,9 +53,8 @@ set up your git repository, current functionality works with merely setting it u
 
 `git clone https://github.com/johncameronquinn/wats-senior-capstone.git`
 
-## Alternatives:
-[Mycobee's Test Suite](https://github.com/Mycobee/whonix_automated_test_suite)
-
+## Related Software:
+[Mycobee's Test Suite](https://github.com/Mycobee/whonix_automated_test_suite) is intended to serve as a compliment to our suite, and targets different features beyond the scope of what we could accomplish in our given time frame. However, when combined the set of testable features could be quite robust. 
 
 ## Authors:
 
