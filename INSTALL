@@ -1,0 +1,9 @@
+Current install status is manual, and as such, expect this to be rough, I suspect we will be replacing this file with a makefile as is most likely proper.
+
+Anyway, if you'd like to use the current manpage (or just see it as it would appear to a user), run:
+
+cp ./docs/whonix-ats-execute.1 /usr/share/man/man1/
+
+Then, you should be able to just type
+
+"man whonix-ats-execute" and see the man page in all it's glory. 

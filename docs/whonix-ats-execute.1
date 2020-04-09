@@ -1,0 +1,56 @@
+." Process this file with groff -man -Tascii whonix-ats-execute.1
+." 
+." credit for the research to create this file goes to several online resources,
+." especially: https://www.golinuxcloud.com/create-man-page-template-linux-with-examples/
+."
+
+.TH whonix-ats-execute 1 2020-04-08 "version 0.1"
+.SH NAME
+
+whonix-ats-execute - Run the automated testing suite and produce a report.
+.SH SYNOPSIS
+
+whonix-ats-execute [ OPTIONS ]
+.SH DESCRIPTION
+
+.BI whonix-ats-execute 
+performs a sequential execution of tests, and generates a report to the specified location. The default location is stdout. This tool is the driver for the whonix automated testing suite. Specifics are as follows:
+
+.PP
+.IP -
+All tests in the .feature directory will be exectuted, see STRUCTURE
+.IP -
+Any current tests utilize GUI emulation, including programmatic keystroke input, plan accordingly
+.IP -
+Tests are designed to operate on a fresh Whonix system, other distibutions and configurations are unsupported.
+.IP -
+This tool is still in development, and it's output may not be reliable
+
+.SH OPTIONS
+.TP
+.IP "-o, --output=<FILE>"
+Writes the output to FILE.
+.IP "-p --featureparam=<KEY>,<VALUE>"
+Provide key value pairs to be used by tests, these take precedence over the values stored in CONFIG. These are passed as global variables to the underlying scripts.
+
+.SH EXAMPLES
+whonix-ats-execute -o ~/output.txt
+
+whonix-ats-execute -p torbrowserpath,~/custom/path/to/.tb/
+
+whonix-ats-execute --featureparam=torbrowserpath,~/custom/path/to/.tb/ --featureparam=MyKey,MyValue
+
+.SH STRUCTURE
+.IP $INSTALLHOME/features
+Location of the test .feature files, written in the Gherkin BDD language
+.IP $INSTALLHOME/features.steps
+Location of the corresponding .step implementation files for the tests.
+.IP $INSTALLHOME/.config
+config file location
+
+.SH BUGS
+.PP
+The whonix automated testing suite (abbrev. WATS) is currently in development, so bugs will likely be frequent. 
+
+.PP
+Track our development, and find additional documentation, at our git repository https://github.com/johncameronquinn/wats-senior-capstone
