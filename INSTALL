@@ -6,4 +6,7 @@ cp ./docs/whonix-ats-execute.1 /usr/share/man/man1/
 
 Then, you should be able to just type
 
-"man whonix-ats-execute" and see the man page in all it's glory. 
+"man whonix-ats-execute" and see the man page in all it's glory.
+
+And, the shell script is not added to the path, so you either need to add it into the path,
+or simply run it as whonix-ats-execute.sh

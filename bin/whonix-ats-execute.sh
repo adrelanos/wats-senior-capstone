@@ -73,7 +73,7 @@ case $i in
 	;;
     *)
          # unknown option
-         echo "unknown option supplied"
+         echo "unknown option supplied, try man whonix-ats-execute"
     ;;
 esac
 done

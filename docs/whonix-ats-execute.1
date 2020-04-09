@@ -28,10 +28,15 @@ This tool is still in development, and it's output may not be reliable
 
 .SH OPTIONS
 .TP
-.IP "-o, --output=<FILE>"
+.IP "-o=<FILE>, --output=<FILE>"
 Writes the output to FILE.
-.IP "-p --featureparam=<KEY>,<VALUE>"
+.IP "-p=<KEY>,<VALUE> --featureparam=<KEY>,<VALUE>"
 Provide key value pairs to be used by tests, these take precedence over the values stored in CONFIG. These are passed as global variables to the underlying scripts.
+.IP "-s=<SLEEP_MULTIPLIER>"
+Supply your own thread.sleep() modifier (default 1.0) to the test suite, modifying this value is recommended, to adapt to the speed of your setup. When in doubt, higher numbers are better, but will slow down testing.
+.IP "-d --debug"
+Enables behave's Debug-On-Error functionality, useful for troubleshooting step implementations
+
 
 .SH EXAMPLES
 whonix-ats-execute -o ~/output.txt
@@ -47,6 +52,10 @@ Location of the test .feature files, written in the Gherkin BDD language
 Location of the corresponding .step implementation files for the tests.
 .IP $INSTALLHOME/.config
 config file location
+.IP $INSTALLHOME/bin
+location of executables
+.IP $INSTALLHOME/docs
+additional documentation
 
 .SH BUGS
 .PP
