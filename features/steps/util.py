@@ -8,7 +8,7 @@ import os.path
 ### BASIC ###
 # this section contains basic checks, such as file io, install status, etc.
 
-TIME_CONSTANT = 3
+TIME_CONSTANT = 3.0
 
 @given('the application "{application}" is installed')
 def step_impl(context, application):
@@ -151,7 +151,7 @@ def step_impl(context, key):
     # TODO emulate the user pressing the key 'key'
     # Assumes this a functional key rather than a letter
     # such as enter or alt
-    time.sleep(TIME_CONSTANT)
+    time.sleep(TIME_CONSTANT * context.sleepmult)
     type("<" + key + ">")
     pass
 
@@ -169,7 +169,7 @@ def step_impl(context, keycombo):
         else:
             combo += tok
 
-    time.sleep(TIME_CONSTANT)
+    time.sleep(TIME_CONSTANT * context.sleepmult)
     keyCombo(combo)
     
     pass
@@ -178,7 +178,7 @@ def step_impl(context, keycombo):
 def step_impl(context, text):
     # TODO emulate the user typing the text 'text'
 
-    time.sleep(TIME_CONSTANT)
+    time.sleep(TIME_CONSTANT * context.sleepmult)
     type(text)
 
     pass

@@ -73,7 +73,8 @@ case $i in
 	;;
     *)
          # unknown option
-         echo "unknown option supplied, try man whonix-ats-execute"
+        echo "Error: unknown option supplied, or invalid syntax, try man whonix-ats-execute."
+	exit 1
     ;;
 esac
 done
