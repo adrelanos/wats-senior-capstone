@@ -33,21 +33,31 @@ def step_impl(context, application):
 
 @given('"{application}" is not running')
 def step_impl(context, application):
+    
     #checks that the application 'application' is not running
     #TODO (assert application not running)
+    
     try:
-        process = subprocess.check_output(["pidof", application])
+        pid = subprocess.check_output(["pidof", application])
+        context.pids[application]=pid
+        
     except subprocess.CalledProcessError:  #if an error code, it ain't running
-        pass 
-    fail
+        raise
 
 @given('the file "{filepath}" does not exist')
 def step_impl(context, filepath):
-    #simply checks if the file at filepath exists
-    if not os.path.isfile(filepath):
-        pass
-    else:
-        fail
+
+    #simply checks if the file at filepath exists, delete it if it does
+    # given is meant to put the system into a known state
+    
+    if os.path.isfile(filepath):
+        try:
+            os.remove(filepath)
+            pass
+        except:
+            raise
+    pass
+            
 
 @given('the test file location is at "{filepath}"')
 def step_impl(context, filepath):
@@ -57,29 +67,26 @@ def step_impl(context, filepath):
 
 @given('the test file does not exist')
 def step_impl(context):
-    try:
-	    os.remove(context.testfilepath)
-	    pass
-    except:
-	    pass
+    if os.path.isfile(context.testfilepath):
+        
+        try:
+            os.remove(context.testfilepath)
+            pass
+        except:
+            raise
+        
     pass
 
 @then('the file "{filepath}" exists')
 def step_impl(context, filepath):
-    if os.path.isfile(filepath):
-        pass
-    else:
-        fail
+    assert (os.path.isfile(filepath))
 
-@then('that file contains the "{oracletext}"')
-def step_impl(context):
-    with open(context.testfilepath, 'r') as textfile:
+@then('the file "{filepath}" contains the "{oracletext}"')
+def step_impl(context, filepath, oracletext):
+    with open(filepath, 'r') as textfile:
         text = textfile.read()
         textfile.close()
-    if (re.search(oracletext)) is None:
-        fail
-    else:
-        pass
+    assert(re.search(oracletext,text)) is not None
 
 @then('"{application}" is running')
 def step_impl(context, application):
@@ -171,6 +178,7 @@ def step_impl(context, keycombo):
 
     time.sleep(TIME_CONSTANT * context.sleepmult)
     keyCombo(combo)
+    time.sleep(TIME_CONSTANT * context.sleepmult)
     
     pass
 

@@ -1,11 +1,11 @@
+@torbrowser
 Feature: internet browsing using the tor browser
  In order to use the whonix operating system
  As a whonix user
  I need to be able to browse the internet
 
  Background:
-  Given the test file location is at "~/.tb/tor-browser/Browser/Downloads/websitetest"
-  And the test file does not exist
+  Given the file "/home/user/.tb/tor-browser/Browser/Downloads/websitetest.html" does not exist
   And the tor browser is running
 
  Scenario Outline: Navigating to various websites
@@ -16,11 +16,15 @@ Feature: internet browsing using the tor browser
   And I press the key combination "ctrl s"
   And I type "websitetest"
   And I press the key combination "Enter"
-  Then the file "~/.tb/tor-browser/Browser/Downloads/websitetest" exists
-  And that file contains the "<oracletext>"
+  Then the file "/home/user/.tb/tor-browser/Browser/Downloads/websitetest.html" exists
+  And the file "/home/user/.tb/tor-browser/Browser/Downloads/websitetest.html" contains the "<oracletext>"
 
   Examples:
    | webaddress | oracletext |
    | https://check.torproject.org | Congratulations. This browser is configured to use Tor. |
    | http://dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion | wiki/Why_Whonix_is_Freedom_Software |
    | https://check.torproject.org | wiki/Why_Whonix_is_Freedom_Software |
+
+ Scenario: Close the browser cleanly
+  When we send the terminate signal to the browser
+  Then the tor browser closes successfully
