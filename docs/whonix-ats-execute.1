@@ -34,8 +34,11 @@ Writes the output to FILE.
 Provide key value pairs to be used by tests, these take precedence over the values stored in CONFIG. These are passed as global variables to the underlying scripts.
 .IP "-s=<SLEEP_MULTIPLIER>"
 Supply your own thread.sleep() modifier (default 1.0) to the test suite, modifying this value is recommended, to adapt to the speed of your setup. When in doubt, higher numbers are better, but will slow down testing.
+.IP "-t=\[char34]<CUSTOM_OPTIONS>\[char34] --transparent=\[char34]<CUSTOM_OPTIONS>\[char34]"
+Passes the captured string directly through to behave. This is included to facilitate ease of use for any options not already exposed by this driver, see behave documentation for details on the specific options you can provide. Supply the entire string you want passed through. The potential options are rather robust, so checking with behave is highly recommended if you're missing a feature here. 
 .IP "-d --debug"
-Enables behave's Debug-On-Error functionality, useful for troubleshooting step implementations
+Enables a Debug-On-Error functionality, useful for step implementation debugging. Backed by pdb.
+
 
 
 .SH EXAMPLES

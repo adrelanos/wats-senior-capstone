@@ -29,6 +29,7 @@ debug=true # enable debug mode, verbose output when applicable
 # variables
 declare -A paramarr #list of featureparams
 opsflag=false
+transflag=false
 behavedebug=false
 
 #defaults
@@ -62,9 +63,27 @@ case $i in
 	    paramarr[$KEY]=$VAL
 	    echo "KEY IS ${KEY}"
 	    echo "VALUE IS ${VAL}"
-
 	done
-#	paramarr[$KEY]=$VAL
+	
+	shift # past argument=value
+	;;
+    
+    -t=*|--transparent=*)
+	TRANSPARENTOPS="${i#*=}"
+	if [ $transflag == true ] ## transparent flag was already supplied once
+	then
+	    echo "the transparent flag must only be supplied once, if at all."
+	    echo "ex: -t=\"--no-summary -q --stop\""
+	    exit 1
+	else
+	    transflag=true
+	fi
+
+	if [ $debug == true ]
+	then
+	    echo "TRANSPARENTOPS IS ${TRANSPARENTOPS}"
+	fi
+
 	shift # past argument=value
 	;;
     --debug)
@@ -94,7 +113,12 @@ if [ $opsflag == true ]
 then
     for key in ${!paramarr[@]}; do
 	PARAMS="${PARAMS} -D ${key}=${paramarr[${key}]}"
-    done
+    done    
+fi
+
+if [ $transflag == true ]
+then
+    PARAMS="${PARAMS} ${TRANSPARENTOPS}"
 fi
 
 if [ $behavedebug == true ]
