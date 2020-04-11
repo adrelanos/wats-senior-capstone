@@ -22,8 +22,7 @@ Feature: internet browsing using the tor browser
   Examples:
    | webaddress | oracletext |
    | https://check.torproject.org | Congratulations. This browser is configured to use Tor. |
-   | http://dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion | wiki/Why_Whonix_is_Freedom_Software |
-   | https://check.torproject.org | wiki/Why_Whonix_is_Freedom_Software |
+   | http://dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion | https://www.whonix.org/wiki/Why_Whonix_is_Freedom_Software |
 
  Scenario: Close the browser cleanly
   When we send the terminate signal to the browser
