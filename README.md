@@ -47,7 +47,6 @@ from stock Whonix, first make sure you're up-to-date, then,
 
 `pip3 install dogtail` 
 
-`sudo apt-get install accerciser`
 
 set up your git repository, current functionality works with merely setting it up in the home directory (does this matter?)
 
