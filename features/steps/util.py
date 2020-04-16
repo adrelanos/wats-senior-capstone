@@ -13,7 +13,6 @@ TIME_CONSTANT = 3.0
 @given('the application "{application}" is installed')
 def step_impl(context, application):
     # checks with DPKG that 'application' is installed
-    # TODO
     output = subprocess.check_output(["dpkg", "--status", application], encoding='ascii')
     match = re.search(r'Status: install ok installed', output)
     if match is None:
@@ -24,7 +23,6 @@ def step_impl(context, application):
 @given('"{application}" is running')
 def step_impl(context, application):
     #checks that the application 'application' is running
-    #TODO (assert application is running)
     try:
         process = subprocess.check_output(["pidof", application])
     except subprocess.CalledProcessError:  #if an error code, it ain't running
@@ -33,10 +31,7 @@ def step_impl(context, application):
 
 @given('"{application}" is not running')
 def step_impl(context, application):
-    
     #checks that the application 'application' is not running
-    #TODO (assert application not running)
-    
     try:
         pid = subprocess.check_output(["pidof", application])
         context.pids[application]=pid
@@ -46,10 +41,8 @@ def step_impl(context, application):
 
 @given('the file "{filepath}" does not exist')
 def step_impl(context, filepath):
-
     #simply checks if the file at filepath exists, delete it if it does
     # given is meant to put the system into a known state
-    
     if os.path.isfile(filepath):
         try:
             os.remove(filepath)
@@ -68,13 +61,11 @@ def step_impl(context, filepath):
 @given('the test file does not exist')
 def step_impl(context):
     if os.path.isfile(context.testfilepath):
-        
         try:
             os.remove(context.testfilepath)
             pass
         except:
-            raise
-        
+            raise     
     pass
 
 @then('the file "{filepath}" exists')
@@ -91,7 +82,6 @@ def step_impl(context, filepath, oracletext):
 @then('"{application}" is running')
 def step_impl(context, application):
     # checks that the application 'application' is running
-    # TODO (assert application is running)
     try:
         process = subprocess.check_output(["pidof", application])
     except subprocess.CalledProcessError:  #if an error code, it ain't running
@@ -110,7 +100,7 @@ def step_impl(context, application):
             break
         counter +=1
     process = process[temp+1:temp2]
-    process = "mousepad: " + process
+    process = "" + application + ": " + process
 
     #may need to some more magic here if we have more than one instances running
 
@@ -124,7 +114,6 @@ def step_impl(context, application):
 @then('"{application}" is not running')
 def step_impl(context, application):
     #checks that the application 'application' is not running
-    #TODO (assert application not running)
     try:
         for app in context.activeApplications:
             if application in app:
@@ -136,11 +125,10 @@ def step_impl(context, application):
 
 @when('I open the application "{application}" programmatically')
 def step_impl(context, application):
-    # TODO, open the application programmtically using python subprocess
+    # open the application programmtically using python subprocess
     # save the active application's PID in context so that it can be closed if needed
 	#currently done in the 'is running section'
 	#change or modifty to your preference
-
 
     try:
         ## I also think we should have a subprocesses list passed around
@@ -155,7 +143,7 @@ def step_impl(context, application):
 
 @when('I press "{key}"')
 def step_impl(context, key):
-    # TODO emulate the user pressing the key 'key'
+    # emulate the user pressing the key 'key'
     # Assumes this a functional key rather than a letter
     # such as enter or alt
     time.sleep(TIME_CONSTANT * context.sleepmult)
@@ -164,7 +152,7 @@ def step_impl(context, key):
 
 @when('I press the key combination "{keycombo}"')
 def step_impl(context, keycombo):
-    # TODO emulate the user pressing the keycombo 'keycombo'
+    # emulate the user pressing the keycombo 'keycombo'
     # this assumes each key press is separated by a space 
     # ie I press the key combo Alt F4 will become <alt>f4 or ctrl s becomes <ctrl>s 
     # note the lack of a space in the output
@@ -184,7 +172,7 @@ def step_impl(context, keycombo):
 
 @when('I type "{text}"')
 def step_impl(context, text):
-    # TODO emulate the user typing the text 'text'
+    # emulate the user typing the text 'text'
 
     time.sleep(TIME_CONSTANT * context.sleepmult)
     type(text)

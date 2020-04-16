@@ -6,5 +6,4 @@ Feature: whonix check terminal command
  Scenario: run whonixcheck --verbose --leak-tests --gui --cli
   When I run the command "whonixcheck" with the options "--verbose --leak-tests --gui --cli" programmatically
   Then there is CLI output
-  And the GUI window appeared
-  And the GUI window can be dismissed with the OK or Close button
+  And the GUI window appears and is dismissed
