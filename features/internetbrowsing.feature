@@ -25,5 +25,6 @@ Feature: internet browsing using the tor browser
    | http://dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion | https://www.whonix.org/wiki/Why_Whonix_is_Freedom_Software |
 
  Scenario: Close the browser cleanly
-  When we send the terminate signal to the browser
+  When I press the key combination "alt F4"
+  and I press the key combination "Enter"
   Then the tor browser closes successfully
