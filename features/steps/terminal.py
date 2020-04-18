@@ -4,7 +4,7 @@ import time
 import subprocess 
 import re
 import os.path
-
+import pwd
 
 #@given('"{application}" is running')
 #def step_impl(context, application):
@@ -37,25 +37,20 @@ def step_impl(context, cmd, params, rootPW):
 
 @then('the user "{user}" exists')
 def step_impl(context,user):
-    command = "id -u " + user
-    out = subprocess.Popen(command.split(),stdout=subprocess.PIPE,stderr = subprocess.STDOUT)
-    outString = out.communicate()
-    outString = str(out)
-    if(re.search("no such user", outString)):
-        assert False
-    else:
+    try:
+        pwd.getpwnam(user)
         pass
+    except KeyError:
+        assert False
+
 
 @then('the user "{user}" no longer exists')
 def step_impl(context,user):
-    command = "id -u " + user
-    out = subprocess.Popen(command.split(),stdout=subprocess.PIPE,stderr = subprocess.STDOUT)
-    outString = out.communicate()
-    outString = str(out)
-    if(re.search("no such user", outString)):
-        pass
-    else:
+    try:
+        pwd.getpwnam(user)
         assert False
+    except KeyError:
+        pass
 
 #todo use the CLI output to verfiy possible issues
 @then('there is CLI output')
