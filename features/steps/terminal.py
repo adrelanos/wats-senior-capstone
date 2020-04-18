@@ -20,6 +20,43 @@ def step_impl(context, cmd, params):
     pass
 
 
+@when('I run the command "{cmd}" with the options "{params}" programmatically with root permissions my password being "{rootPW}"')
+def step_impl(context, cmd, params, rootPW):
+    #executes the command with the parameters
+    command = cmd + " " + params
+    termAppRoot = subprocess.Popen(command.split(),stdout=subprocess.PIPE)
+    time.sleep(.5 * context.sleepmult)
+    type(rootPW)
+    time.sleep(context.sleepmult * .4)
+    keyCombo("<enter>")
+    termAppRoot.wait()
+    pass
+
+
+
+
+@then('the user "{user}" exists')
+def step_impl(context,user):
+    command = "id -u " + user
+    out = subprocess.Popen(command.split(),stdout=subprocess.PIPE,stderr = subprocess.STDOUT)
+    outString = out.communicate()
+    outString = str(out)
+    if(re.search("no such user", outString)):
+        assert False
+    else:
+        pass
+
+@then('the user "{user}" no longer exists')
+def step_impl(context,user):
+    command = "id -u " + user
+    out = subprocess.Popen(command.split(),stdout=subprocess.PIPE,stderr = subprocess.STDOUT)
+    outString = out.communicate()
+    outString = str(out)
+    if(re.search("no such user", outString)):
+        pass
+    else:
+        assert False
+
 #todo use the CLI output to verfiy possible issues
 @then('there is CLI output')
 def step_impl(context):
