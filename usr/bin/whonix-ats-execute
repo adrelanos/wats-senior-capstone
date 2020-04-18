@@ -23,8 +23,9 @@
 #
 
 
-# options
+# config
 debug=true # enable debug mode, verbose output when applicable
+INSTALLROOT="/" # default is / for a standard system install
 
 # variables
 declare -A paramarr #list of featureparams
@@ -137,8 +138,8 @@ fi
 if [ -z $FILE ]
    then
        # just run behave normally
-       behave $PARAMS
+       behave $PARAMS $INSTALLROOT/usr/share/whonix-ats/features/
    else
        # a output file was supplied pipe itest
-       behave $PARAMS > $FILE
+       behave $PARAMS $INSTALLROOT/usr/share/whonix-ats/features/ > $FILE
 fi
