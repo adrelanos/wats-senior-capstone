@@ -56,18 +56,12 @@ def step_impl(context,user):
 @then('there is CLI output')
 def step_impl(context):
     output = context.termApp.communicate
-
+    assert output is not None 
     pass
 
 #might be an unneeded implementation here
 #could use the util with the @when keyCombo
 #but there isn't a @then currently
-#possible change for todo
-#another thing to note is that the GUI check
-#window may not always comeplete as quickly
-#as the console portion and I'm unsure how 
-#the repsonsiveness will work.
-#REQUIRES FURTHER TESTING
 @then('the GUI window appears and is dismissed')
 def step_impl(context):
     time.sleep(.5 * context.sleepmult)
