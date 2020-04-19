@@ -66,7 +66,7 @@ Cameron Dey
 ## Resources:
 [Whonix](https://www.whonix.org)
 
-[Wbonix ATS Threads](https://www.whonix.org/wiki/Dev/Automated_Tests)
+[Whonix ATS Threads](https://www.whonix.org/wiki/Dev/Automated_Tests)
 
 [Behave](https://behave.readthedocs.io/en/latest/)
 
