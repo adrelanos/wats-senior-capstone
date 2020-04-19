@@ -147,7 +147,7 @@ def step_impl(context, key):
     # Assumes this a functional key rather than a letter
     # such as enter or alt
     time.sleep(TIME_CONSTANT * context.sleepmult)
-    type("<" + key + ">")
+    keyCombo("<" + key + ">")
     pass
 
 @when('I press the key combination "{keycombo}"')
