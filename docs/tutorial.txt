@@ -1,0 +1,76 @@
+How-To write tests:
+
+intro:
+
+	Various steps have already implemented and as such should
+	be reused. Please consult the interface in:
+	/wats-senior-capstone/usr/share/whonix-ats/features/interface.py
+	It is possible something needed is already implemented.
+	If it hasn't been created please appended it to the 
+	interface once its created along with a description
+	for others.
+
+writing python:
+
+	The code will be written as such, please note every method
+	is defined as 'step_impl' along with alteast one parameter
+	being the context variable. Other variables can be passed
+	please see the variables section.
+
+	@phrase('sentence structure')
+	def step_impl(context):
+		<code>
+		pass
+
+	Note that the phrase is the first word of the Gherkin and as 
+	such should NOT be included in the sentence structure.
+
+writing Gherkin(.features):
+
+	<todo>
+	Currently see:
+	https://behave.readthedocs.io/en/latest/
+	
+variables in python:
+
+	if a variable is needed to be passed along between each
+	test cases, use the context.<variable>
+	example: context.termApp in the terminal.py
+
+	if a variable is needed to be initialized before execution
+	use the environment.py
+	example: context.sleepmult
+
+	if a variable is needed to be taken via the Gherkin do such
+	that in the .py:
+	@phrase('sentence structure "{variable}"')
+	the {} are NOT present in the Gherkin
+	the "" are present in the Gherkin
+
+variables in Gherkin:
+	
+	To input a variable in the Gherkin, put the variable in quotes
+	example: When I type "variable"	
+
+	If you want to feed in multiple variables into a test
+	use a 'Scenario Outline' instead of a 'Scenario'. Place your
+	variables within quotes and brackets. 
+	example: "<mulitcasevariable>"
+	Your array of variables should be stored within a 'Examples:'
+	block followed by a heading row followed by the variables
+	example:
+   		Examples:
+   		| multicasevariable |
+		| xyz |
+		| abc |
+
+
+
+
+
+
+
+
+
+
+
