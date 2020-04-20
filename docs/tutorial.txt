@@ -1,47 +1,91 @@
-How-To write tests:
+How-To write for the Whonix Automated Testing Suite.
 
 intro:
+	
+	This tutorial addresses how to implement tests for this kit specifically, although we do address some aspects
+	of the tools utilized, such as behave and dogtail.
+
+	Behave, the primary driver behind the WATS, is a python-ified semi-official implementation of cucumber.	
+	There exists a wealth of information regarding cucumber, and behavior driven development.
+
+	There also exists a wealth of information regarding for the development of Behave as well. 
+	Behave's official documentation is useful, although we've found it sometimes lacking in certain capacities.
+	
+	This tutorial works as an excellent supplement to behave's documentation, and we found it useful.
+	
+		https://jenisys.github.io/behave.example/tutorials/tutorial01.html
+	
+	Dogtail is the tool we've utilized for GUI automation, and therefore is only used in tests when GUI 
+	automation is performed. 
 
 	Various steps have already implemented and as such should
 	be reused. Please consult the interface in:
-	/wats-senior-capstone/usr/share/whonix-ats/features/interface.py
+	/wats-senior-capstone/usr/share/whonix-ats/features/interface.py||
+
 	It is possible something needed is already implemented.
 	If it hasn't been created please appended it to the 
 	interface once its created along with a description
-	for others.
+	for others. The goal here is enable easy writing of future tests,
+	eventually obtaining a large degree of coverage of Whonix.
 
-writing python:
+writing python step implementations:
 
-	The code will be written as such, please note every method
-	is defined as 'step_impl' along with alteast one parameter
-	being the context variable. Other variables can be passed
-	please see the variables section.
+	Step definitions are implementated with the following structure, 
+	please note every method is defined as 'step_impl' along with at least one parameter
+	being the context variable. The context variable is a simple key-value pair object,
+	and is passed from step to step.
+	
+	An important detail to note is that there are reserved attributes, such as context.filepath,
+	so be sure to not try to set those to your own values.
 
 	@phrase('sentence structure')
 	def step_impl(context):
 		<code>
 		pass
+		
+	In this context, phrase means @when, @then, or @given, which are the three
+	types of step definitions utilized in Behave.
+	
+	Take care when writing step definitions to not write:
+	
+	@given('given the test file exists'), the given is implied with @given.
 
-	Note that the phrase is the first word of the Gherkin and as 
-	such should NOT be included in the sentence structure.
+	Variables, as previously mentioned, can also be passed through to step definitions.
+	
+	A step definition which utilizes a variable passed from the Gherkin file would use the following syntax.
+	
+	@given('the file {filepath} exists'):
+	def step_impl(context, filepath):
+		<code>
 
 writing Gherkin(.features):
 
-	<todo>
-	Currently see:
-	https://behave.readthedocs.io/en/latest/
+	Behave .feature files follow a natural language like structure, as previously noted. Feature file's 
+	contain scenarios, and each scenario contains a group of step functions, which are executed sequentially.
 	
-variables in python:
+	An example step implementation with a more robust set of feature implementations can be found in 
+	our internetbrowsing.feature file, which utilizes a typical scenario, a scenario outline - which operates using a table,
+	effectively preventing silly copy-pasting of nearly-identical scenarios, and background section which
+	runs common steps before every scenario is executed.
+	
+	Detailed explantions of Gherkin our found in many sources, since it is utilized by Cucumber as well as Behave. 
+	Cucumber is written in many languages and covered well. 	
+	
+variables passed to python:
 
-	if a variable is needed to be passed along between each
+	If a variable is needed to be passed along between each
 	test cases, use the context.<variable>
-	example: context.termApp in the terminal.py
+	example: context.termApp in the terminal.py.
 
-	if a variable is needed to be initialized before execution
-	use the environment.py
+	If a variable is needed to be initialized before execution
+	use the environment.py.
+
 	example: context.sleepmult
+	
+	The environment.py file's functions can be greatly expanded, as needed, but at the moment our
+	uses for it our relatively limited. 
 
-	if a variable is needed to be taken via the Gherkin do such
+	If a variable is needed to be taken via the Gherkin do such
 	that in the .py:
 	@phrase('sentence structure "{variable}"')
 	the {} are NOT present in the Gherkin
@@ -51,8 +95,12 @@ variables in Gherkin:
 	
 	To input a variable in the Gherkin, put the variable in quotes
 	example: When I type "variable"	
+	
+	Although this isn't a requirement, it prevents strange behavior issues.
+	Behave is somewhat lenient with what it allows when writing step definitions, 
+	and this can create disruptive ambiguity if proper style is not utilized.
 
-	If you want to feed in multiple variables into a test
+	If you would like to use a table to feed in variables into a scenario, 
 	use a 'Scenario Outline' instead of a 'Scenario'. Place your
 	variables within quotes and brackets. 
 	example: "<mulitcasevariable>"
@@ -63,14 +111,4 @@ variables in Gherkin:
    		| multicasevariable |
 		| xyz |
 		| abc |
-
-
-
-
-
-
-
-
-
-
 
